@@ -22,6 +22,9 @@
 5、支付验证：使用云闪付或平台指定支付方式，国补优惠直接抵扣（京东显示抵扣后价格，淘宝需在支付宝页面查看补贴）。
 6、签收与验收：部分高价值商品需现场激活，快递员拍摄序列号并验证身份证（防止黄牛套利）。
 
+
+
+The laptop has a network cable interface and a type-C interface.
 Certainly! Below is the markdown table converted from the image provided:
 
 ```markdown
@@ -40,7 +43,6 @@ Certainly! Below is the markdown table converted from the image provided:
 ```
 
 The table represents a 3A Game FPS (frames per second) test with average fps under the highest quality setting for two different systems: Bright16 Air and Pterosaur15 Pro. The games tested include Forza Horizon 5, The Callisto Protocol, Dying Light 2, Shadow of the Tomb Raider, Total War: Warhammer 3, Cyberpunk 2077, and Metro Exodus. The CPU, GPU, and Memory specifications for each system are also provided.
-The laptop has a network cable interface and a type-C interface.
-The laptop's back cover is black.
+The laptop's back cover is silver in color.
 The laptop has a network cable interface and a type-C interface.
 Yes, there is a numeric keypad on the right side of the laptop's keyboard.

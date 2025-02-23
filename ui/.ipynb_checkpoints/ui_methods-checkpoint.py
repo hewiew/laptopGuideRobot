@@ -99,7 +99,7 @@ def add_assi_message_to_session(prompt, recovery_list):
         recovery_list.append({'role': role, 'type': my_type, 'content': prompt})
 
 
-def generate_assistant_response(query, recovery_list, bot):
+def generate_assistant_response(query, recovery_list):
     # add_user_message_to_session 显示消息的时候做了处理，所以这里不需要再次添加最新提问
     print('history-->')
     # 历史对话记录
@@ -112,8 +112,8 @@ def generate_assistant_response(query, recovery_list, bot):
         # 模型处理
         # 模型输出为message_text
         
-        message_text = bot.ask(api__key.api_key, query=query, refuse_model="meta/llama-3.3-70b-instruct")
-        # main(query, apikey=api__key.api_key, save_path=path+'/nvidia/process_chart', llm_model="deepseek-ai/deepseek-r1", embedding_model="baai/bge-m3",vector_db_path=path+'/nvidia/vdb')
+        # message_text = main(query, apikey=api__key.api_key, save_path='../aws_hackathon_demo/process_chart', llm_model="deepseek-ai/deepseek-r1", embedding_model="ai-embed-qa-4",vector_db_path='../aws_hackathon_demo/vdb')
+        message_text = main(query)
 
         # 多模态处理在此处
         message_placeholder = st.empty()
@@ -172,9 +172,9 @@ def background_set():
     st.markdown(custom_css, unsafe_allow_html=True)
 
 
-def logo_display(path):
+def logo_display():
     # 打开本地图片文件
-    image_path = path+"/nvidia/icon/icon.png"  # 请替换为实际的图片路径
+    image_path = "./resource/pic/logo.png"  # 请替换为实际的图片路径
     image = Image.open(image_path)
     # 在侧边栏显示图片
     st.sidebar.image(image, caption='卡拉米', use_container_width =True)

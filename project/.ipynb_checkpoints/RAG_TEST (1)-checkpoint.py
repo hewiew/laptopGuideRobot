@@ -14,10 +14,9 @@ import re
 import check
 import api__key
 from llama_cpp import Llama
-from chenyj import predict
 api_key = api__key.api_key
 os.environ["NVIDIA_API_KEY"] = api_key
-# refuse_model = "meta/llama-3.3-70b-instruct"
+refuse_model = "meta/llama-3.3-70b-instruct"
 
 # 查看当前可以使用的模型
 # In[3]:
@@ -40,10 +39,8 @@ def extract_python_code(text):
     matches = re.findall(pattern, text, re.DOTALL)
     #print('-' * 50, matches)
     c = [match.strip() for match in matches]
-    if not c:
-        return False
-    else:
-        return c[0]
+
+    return c[0]
 
 # 执行由大模型生成的代码
 def execute_and_return(x):
@@ -66,11 +63,10 @@ class RAGCarAdvisor:
         :param vector_db_path: 向量数据库的存储路径（FAISS）
         """
         self.llm = ChatNVIDIA(model_name=llm_model)
-        self.chart_reading = ChatNVIDIA(model="qwen/qwen2.5-coder-32b-instruct")
         self.embedding_model = NVIDIAEmbeddings(model=embedding_model)
         self.vector_db = FAISS.load_local(vector_db_path, self.embedding_model, allow_dangerous_deserialization=True)
-        self.local_llm = Llama("/home/nvidia/aws_hackathon_demo/model/Llama-3.1-8b-chinese-Q4_K_M.gguf", flash_attn=True, n_gpu_layers=-1, n_ctx=2048)
-        self.history = []
+        # self.local_llm = Llama("/home/nvidia/aws_hackathon_demo/model/Llama-3.1-8b-chinese-Q4_K_M.gguf", flash_attn=True, n_gpu_layers=-1)
+
     def optimize_query(self, query: str) -> str:
         """
         使用 LLM 进行查询优化，使其更清晰、可检索
@@ -116,20 +112,12 @@ class RAGCarAdvisor:
         :return: 最终回答
         """
         context = "\n".join([doc.page_content for doc in retrieved_docs])
-        assistant = ""
-        # prompt_template = PromptTemplate(
-        #     template="你是一名笔记本销售顾问，用户正在寻找购买笔记本的建议。请基于以下信息回答问题：\n\n{context}\n\n用户的问题：{query}\n\n直接给出回答，不要说出思考逻辑，使用中文回答问题：",
-        #     input_variables=["context", "query"]
-        # )
-        # response = self.llm.invoke(prompt_template.format(context=context, query=query))
-
-        system = f"你是一名笔记本销售顾问，用户正在寻找购买笔记本的建议。请基于以下信息回答问题：\n\n{context}\n\n直接给出回答，不要说出思考逻辑，使用中文回答问题："
-        message = query
-        for out in predict(self.local_llm, message, self.history, system):
-            assistant += out
-            yield out
-                
-        self.history.append([message, assistant])
+        prompt_template = PromptTemplate(
+            template="你是一名笔记本销售顾问，用户正在寻找购买笔记本的建议。请基于以下信息回答问题：\n\n{context}\n\n用户的问题：{query}\n\n直接给出回答，不要说出思考逻辑，使用中文回答问题：",
+            input_variables=["context", "query"]
+        )
+        response = self.llm.invoke(prompt_template.format(context=context, query=query))
+        return response.content
 
     def generate_chart(self, retrieved_docs: List[Document], save_path) -> str:
         """
@@ -145,33 +133,33 @@ class RAGCarAdvisor:
             注意：dot = Digraph(comment='消费补助使用流程', format='png')是唯一正确的形式。{context}""",
             input_variables=["context", "save_path"]
         )
-        response = self.chart_reading.invoke(prompt_template.format(context=context, save_path=save_path))
+        response = self.llm.invoke(prompt_template.format(context=context, save_path=save_path))
         print('*'*50, response)
         execute_and_return(response.content)
         #return response.content
 
-    def ask(self, api_key, refuse_model, query: str) -> str:
+    def ask(self, api_key, refuse_model, query: str, save_path) -> str:
         """
         用户询问汽车相关问题，完整执行 RAG 流程
         :param query: 用户原始查询
         :return: 生成的答案
         """
-        save_path='/home/nvidia/aws_hackathon_demo/process_chart'
+
         res = check.query_check(query, refuse_model)
         # print('-------res:', res)
 
         if res != 1:
             return res
 
-        if self.check_bounds(query) == '1':
-            # 1. 优化查询
-            # optimized_query = self.optimize_query(query)
-            # print(f"优化后的查询: {optimized_query}")
+        # if self.check_bounds(query) == '1':
+        #     # 1. 优化查询
+        #     # optimized_query = self.optimize_query(query)
+        #     # print(f"优化后的查询: {optimized_query}")
 
-            # 2. 检索相关文档
-            retrieved_docs = self.retrieve_documents(query)
-            print('绘图相关', retrieved_docs)
-            self.generate_chart(retrieved_docs, save_path)
+        #     # 2. 检索相关文档
+        #     retrieved_docs = self.retrieve_documents(query)
+        #     print('绘图相关', retrieved_docs)
+        #     self.generate_chart(retrieved_docs, save_path)
 
         # 1. 优化查询
         optimized_query = self.optimize_query(query)
@@ -182,11 +170,10 @@ class RAGCarAdvisor:
 
         # 3. 生成回答
         response = self.generate_response(optimized_query, retrieved_docs)
-        for out in response:
-            yield out
+
         #check.answer_check()
 
-        # return response
+        return response
 
 # def jpg2text(jpg):
 #
@@ -198,20 +185,15 @@ class RAGCarAdvisor:
 #         f'Generate describe of the figure below, : <img src="data:image/png;base64,{image_b64}" />')
 #
 #     return result
-def main(bot, query,apikey, save_path='/home/nvidia/aws_hackathon_demo/process_chart'):
-    pass
-#, llm_model="deepseek-ai/deepseek-r1", embedding_model="baai/bge-m3", vector_db_path="/home/nvidia/aws_hackathon_demo/vdb"):
+def main(query,apikey, save_path='/home/nvidia/aws_hackathon_demo/process_chart', llm_model="deepseek-ai/deepseek-r1", embedding_model="ai-embed-qa-4", vector_db_path="/home/nvidia/aws_hackathon_demo/vdb"):
 
-    # a = RAGCarAdvisor(llm_model=llm_model, embedding_model=embedding_model, vector_db_path=vector_db_path)
-    # p1 = "给我推荐一款能玩3A大作，帧率高的电脑，比如Dying Light 2 ，Shadow of the Tomb Raider"
-    # p2 = "我想要买一台6000元左右的游戏本，显卡我想要NVIDA的GTX 4080， CPU不要AMD的，AMD的太垃圾了，差劲的让想我打人"
-    # p3 = "我想购买游戏本电脑，国补,我想用国补购买笔记本，怎样申请，怎样购买"
-    # response = a.ask(apikey, refuse_model, query, save_path=save_path)
-    # for out in response:
-    #     yield out
-    # print(response)
-    # return response
-# p3 = "我想购买游戏本电脑，国补,我想用国补购买笔记本，怎样申请，怎样购买"
+    a = RAGCarAdvisor(llm_model=llm_model, embedding_model=embedding_model, vector_db_path=vector_db_path)
+    p1 = "给我推荐一款能玩3A大作，帧率高的电脑，比如Dying Light 2 ，Shadow of the Tomb Raider"
+    p2 = "我想要买一台6000元左右的游戏本，显卡我想要NVIDA的GTX 4080， CPU不要AMD的，AMD的太垃圾了，差劲的让想我打人"
+    p3 = "我想购买游戏本电脑，国补,我想用国补购买笔记本，怎样申请，怎样购买"
+    response = a.ask(apikey, refuse_model, query, save_path=save_path)
+    print(response)
+    return response
+p3 = "我想购买游戏本电脑，国补,我想用国补购买笔记本，怎样申请，怎样购买"
 #main(p3, apikey=api__key.api_key, save_path='../aws_hackathon_demo/process_chart', llm_model="deepseek-ai/deepseek-r1", embedding_model="ai-embed-qa-4",vector_db_path='Y:/nvidia')
-#main(p3, apikey=api__key.api_key, save_path='Y:/shao/nvidia/process_chart', llm_model="deepseek-ai/deepseek-r1", embedding_model="ai-embed-qa-4",vector_db_path='Y:\shao/nvidia/vdb')
-#main(p3, apikey=api__key.api_key, save_path='Y:/shao/nvidia/process_chart', llm_model="deepseek-ai/deepseek-r1", embedding_model="ai-embed-qa-4",vector_db_path='Y:\shao/nvidia/vdb')
+main(p3, apikey=api__key.api_key, save_path='/home/nvidia/aws_hackathon_demo/process_chart', llm_model="deepseek-ai/deepseek-r1", embedding_model="ai-embed-qa-4",vector_db_path='/home/nvidia/aws_hackathon_demo/vdb')
