@@ -3,4 +3,5 @@
 https://www.bilibili.com/video/BV1gVAmenEQX/?spm_id_from=333.1387.homepage.video_card.click&vd_source=2550db11f5f25f4e2cc5768a73c0f79e
 
 以下为我们的机器人的操作界面：
-！[操作界面]page.jpg
+
+![操作界面]page.jpg
