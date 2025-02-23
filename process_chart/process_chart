@@ -1,0 +1,15 @@
+// 消费补助使用流程
+digraph {
+	start [label="选择平台和地区" fillcolor=lightblue shape=box style=filled]
+	qr_code [label="领取国补资格" fillcolor=lightblue shape=box style=filled]
+	bind_code [label="绑定资格码" fillcolor=lightblue shape=box style=filled]
+	chose_product [label="选择商品并下单" fillcolor=lightblue shape=box style=filled]
+	payment [label="支付验证" fillcolor=lightblue shape=box style=filled]
+	sign_audit [label="签收与验收" fillcolor=lightblue shape=box style=filled]
+	end [label="结束" fillcolor=lightblue shape=box style=filled]
+	start -> qr_code [label="1.领取国补资格"]
+	qr_code -> bind_code [label="2.绑定资格码"]
+	bind_code -> chose_product [label="3.选择商品并下单"]
+	chose_product -> payment [label="4.支付验证"]
+	payment -> sign_audit [label="5.签收与验收"]
+}

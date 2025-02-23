@@ -1,0 +1,46 @@
+火影 Bright16 Air：前段时间我们测评了一款采用了“模块化设计”的笔记本：Framework Laptop 16（点我回顾），它的整机价格十分高昂，性能表现却比较一般，很难让普罗大众接受。与之相比，今天这台火影 Bright16 Air部分采用了“模块化设计”，它的显卡也可以拆卸，但价格还不到7000元，比Framework便宜多了。而且核心配置、散热表现也要比Framework高。那么它的综合表现究竟如何呢？今天我们就来简单分析一下。
+
+火影 Bright16 Air的配置：**处理器**：R7 8845HS**显卡**：RTX 4060 8GB 独立显卡（140W）**内存**：32GB DDR5 5600MT/s**硬盘**：1TB 固态硬盘**屏幕**：16英寸 2560×1600分辨率 100%sRGB色域 240Hz刷新率 IPS屏**厚度**：18.3~22.7mm**重量**：2.01kg**适配器重量**：483g**参考售价**：6999元
+
+火影 Bright16 Air的优缺点：优点：1. 高负载下，噪音控制较好。2. 显卡可拆卸设计。3. 同类游戏本中，重量较轻。缺点：1. 游戏性能偏低。2. 表面温度较高，长时间高负载使用时最好外接键盘。
+
+火影 Bright16 Air的拆机实拍：4热管双风扇的组合，采用了内吹结构。室温25℃反射率1.0BIOS版本：N.1.13FIR10/N1.14FIR11
+**满载状态下**：CPU温度稳定在87℃，功耗49W，频率3.75GHz左右。显卡温度82.3℃，功耗115W，频率2010MHz。
+**垫高机身后**：CPU依旧87℃撞墙，功耗略微提升到51W，显卡功耗不变，温度略微下降到81.7℃。手动解开CPU温度墙限制后，CPU温度会来到100℃，功耗提升到72W，显卡功耗不变，温度略微提升到84℃。
+**单烤Stress FPU**：CPU温度维持在92.2℃，功耗90W，频率4.45GHz左右。**单烤Furmark**：显卡温度维持在83.2℃，功耗140W，频率2175MHz。
+
+火影 Bright16 Air的表面温度：键盘键帽最高温53.5℃出现在“F8”键上。WASD键附近约为36.7℃。方向键35.5℃。左腕托温度为30.8℃。
+
+火影 Bright16 Air的总结：同样是模块化设计，同样是可拆卸显卡，但火影 Bright16 Air的设计理念与Framework Laptop 16截然不同。Framework的模块化设计做的非常极致，为了保证能更换尽可能多的部件，它牺牲了散热效率，性能表现比较一般，主要是为了提供DIY的乐趣。而火影 Bright16 Air的模块化设计则是为了方便厂商备货，虽然显卡可以拆卸，但拆卸显卡之前要先拆掉整个散热模组，需要一定的动手能力。总的来说，Bright16 Air的核心性能释放和噪音表现都还可以，但表面温度很高。希望未来能有更多品牌跟进这种模块化设计，为用户提供更多的选择。 
+
+火影 Bright16 Air的的设计：在评测它的过程中，我们发现火影 Bright16 Air无法打上NVIDIA的公版驱动，游戏性能也偏低，怀疑与模块化显卡设计有关联。在我看来，显卡模块化是一个可能改变行业的设计，一块主板搭配不同的显卡模块，就可以很方便地提供更多配置选择。但目前这个设计还存在很多“硬伤”，除了刚才提到的性能之外，OEM品牌厂商也很少支持这样的设计。目前这款模具仅有火影在小批量销售，大品牌如机械革命还在犹豫，个人猜测短期内他们不会跟进。「模块化设计」是一个很有魔力的词汇，几乎所有硬件发烧友都关注它。笔记本电脑身为一款“集成度介于平板电脑与台式电脑之间”的设备，是有可能做到模块化的。虽然希望渺茫，但我不会放弃期待。
+
+国家补贴补买笔记本电脑，优惠，便宜，国家补贴。消费补助使用流程信息:1、选择平台和地区：在京东/淘宝等平台搜索“国补”或“电脑国补”，选择支持国补的收货地区（如北京、广东等）。
+2、领取国补资格：通过平台入口领取“资格码”，需实名认证（与云闪付/支付宝实名一致）。
+3、绑定资格码：在商品页面粘贴资格码，选择对应品类（如笔记本电脑）。
+4、选择商品并下单：在“国补专区”选择符合条件的笔记本（需符合能耗等级和价格限制）。
+5、支付验证：使用云闪付或平台指定支付方式，国补优惠直接抵扣（京东显示抵扣后价格，淘宝需在支付宝页面查看补贴）。
+6、签收与验收：部分高价值商品需现场激活，快递员拍摄序列号并验证身份证（防止黄牛套利）。
+
+Certainly! Below is the markdown table converted from the image provided:
+
+```markdown
+| Game Title         | Bright16 Air | Pterosaur15 Pro |
+|--------------------|--------------|-----------------|
+| CPU                | R7 8845HS    | R7 8845H        |
+| GPU                | RTX 4060 140W 2655MHz | RTX 4060 140W OC 2760MHz |
+| Memory             | 32G DDR5 5600 | 32G DDR5 5600   |
+| Forza Horizon 5    | 83           | 73              |
+| The Callisto Protocol | 54.4       | 56.6            |
+| Dying Light 2      | 61.6         | 67              |
+| Shadow of the Tomb Raider | 87     | 92              |
+| Total War: Warhammer 3 | 33.6     | 37              |
+| Cyberpunk 2077     | 41           | 43              |
+| Metro Exodus       | 54.2         | 58.2            |
+```
+
+The table represents a 3A Game FPS (frames per second) test with average fps under the highest quality setting for two different systems: Bright16 Air and Pterosaur15 Pro. The games tested include Forza Horizon 5, The Callisto Protocol, Dying Light 2, Shadow of the Tomb Raider, Total War: Warhammer 3, Cyberpunk 2077, and Metro Exodus. The CPU, GPU, and Memory specifications for each system are also provided.
+The laptop has a network cable interface and a type-C interface.
+The laptop's back cover is black.
+The laptop has a network cable interface and a type-C interface.
+Yes, there is a numeric keypad on the right side of the laptop's keyboard.
